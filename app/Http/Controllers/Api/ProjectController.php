@@ -17,7 +17,7 @@ class ProjectController extends Controller
     {
         $projects = Project::select(['id', 'type_id', 'title', 'author', 'description', 'project_link', 'project_image'])
             ->with(['type:id,type,color', 'technologies:id,type,color'])
-            ->paginate(5);
+            ->paginate(6);
 
         foreach ($projects as $project) {
             $project->project_image = !empty($project->project_image) ? asset('/storage/' . $project->project_image) : 'https://placehold.co/600x400';
