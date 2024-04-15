@@ -45,7 +45,14 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        //
+        $project = Project::select(['id', 'type_id', 'title', 'author', 'description', 'project_link', 'project_image'])
+            ->where('id', $id)
+            ->with(['type:id,type,color', 'technologies:id,type,color'])
+            ->first();
+
+        $project->project_image = !empty($project->project_image) ? asset('/storage/' . $project->project_image) : 'https://placehold.co/600x400';
+
+        return response()->json($project);
     }
 
     /**
